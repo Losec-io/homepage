@@ -1,0 +1,18 @@
+{
+  "name": "losec-homepage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Landing page for losec.io — an AI Security Research Lab",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "nuxt": "^3.19.2"
+  }
+}
