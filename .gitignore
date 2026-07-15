@@ -29,3 +29,6 @@ yarn-error.log*
 
 # Vercel
 .vercel
+
+# Verification screenshots
+.shots
