@@ -1,10 +1,10 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'LoSec — AI Security Research Lab',
+  title: 'AI Security - Research & Redteaming | Losec Labs',
   description:
     'LoSec pairs autonomous AI agents with elite offensive researchers to discover vulnerabilities and 0-days before attackers do. Real disclosures, deep write-ups.',
-  ogTitle: 'LoSec — AI Security Research Lab',
-  ogDescription: 'AI-driven vulnerability discovery and 0-day research.',
+  ogTitle: 'Losec Labs — AI Security Research & Redteaming',
+  ogDescription: 'AI-driven vulnerability discovery and 0-day research. Zero days, minus one.',
   twitterCard: 'summary_large_image',
 })
 </script>
