@@ -29,8 +29,8 @@
       "label": "lines of code audited by AI"
     },
     {
-      "value": "4",
-      "label": "elite offensive certifications held"
+      "value": "5",
+      "label": "elite security certifications held"
     }
   ],
   "vulnsWeFound": {
@@ -54,6 +54,6 @@
     "cta": "Book a briefing"
   },
   "trustBar": {
-    "label": "Backed by hands-on offensive credentials — CAPE · CWEE · OSWE · OSEP"
+    "label": "Backed by hands-on offensive & defensive credentials — CAPE · CWEE · OSWE · OSEP · CDSA"
   }
 }

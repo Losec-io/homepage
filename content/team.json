@@ -37,7 +37,8 @@
     "handle": "vect0r",
     "role": "AI Research Engineer",
     "certs": [
-      "CAPE"
+      "CAPE",
+      "CDSA"
     ],
     "focus": "LLM-assisted vulnerability discovery",
     "bio": "Sofia builds the models and pipelines that let LoSec read code and reason about vulnerabilities at machine scale. She fuses program analysis with LLM-driven triage so human researchers spend their time on the bugs that actually matter. Half her work is finding flaws; the other half is teaching a machine to find them first."

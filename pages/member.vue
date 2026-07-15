@@ -7,7 +7,7 @@ const certMap = Object.fromEntries(certs.map((c) => [c.code, c]))
 useSeo({
   title: 'Members',
   description:
-    'The operators behind LoSec — offensive researchers holding CAPE, CWEE, OSWE and OSEP, building AI that finds vulnerabilities at machine scale.',
+    'The operators behind LoSec — offensive & defensive researchers holding CAPE, CWEE, OSWE, OSEP and CDSA, building AI that finds vulnerabilities at machine scale.',
 })
 
 function monogram(name: string) {
@@ -26,7 +26,7 @@ function monogram(name: string) {
       eyebrow="The operators"
       code="losec://members"
       title="The people behind the findings"
-      description="A small team of offensive researchers and AI engineers. We hold CAPE, CWEE, OSWE and OSEP — and we build the machines that read code faster than any of us can."
+      description="A small team of offensive researchers and AI engineers. We hold CAPE, CWEE, OSWE, OSEP and CDSA — and we build the machines that read code faster than any of us can."
     />
 
     <section class="mx-auto max-w-shell px-5 py-16 sm:px-8">

@@ -11,12 +11,11 @@ import copy from '~/content/copy.json'
         <span class="kicker">{{ copy.trustBar.label }}</span>
       </div>
 
-      <div class="grid grid-cols-2 divide-line border border-line md:grid-cols-4 md:divide-x">
+      <div class="grid grid-cols-2 border-l border-t border-line sm:grid-cols-3 lg:grid-cols-5">
         <div
-          v-for="(cert, i) in certs"
+          v-for="cert in certs"
           :key="cert.code"
-          class="group/reticle relative border-line p-6 transition-colors duration-200 hover:bg-surface"
-          :class="[i < 2 ? 'border-b md:border-b-0' : '', i % 2 === 0 ? 'border-r md:border-r-0' : '']"
+          class="group/reticle relative border-b border-r border-line p-6 transition-colors duration-200 hover:bg-surface"
         >
           <div class="flex items-baseline justify-between">
             <span class="font-display text-3xl font-bold tracking-tightest text-fg transition-colors group-hover/reticle:text-acid">

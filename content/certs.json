@@ -22,5 +22,11 @@
     "name": "OffSec Experienced Penetration Tester",
     "issuer": "OffSec",
     "domain": "Evasion & Red Team"
+  },
+  {
+    "code": "CDSA",
+    "name": "Certified Defensive Security Analyst",
+    "issuer": "Hack The Box",
+    "domain": "Blue Team & Detection"
   }
 ]
