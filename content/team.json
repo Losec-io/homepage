@@ -1,0 +1,55 @@
+[
+  {
+    "name": "Nguyen Van Hiep",
+    "handle": "n0ctis",
+    "role": "Founder & Lead Researcher",
+    "certs": [
+      "OSWE",
+      "OSEP"
+    ],
+    "focus": "0-day discovery",
+    "bio": "Nguyen founded LoSec to turn vulnerability research into a repeatable, AI-assisted discipline rather than a matter of luck. He has spent a decade tearing apart everything from enterprise web stacks to hardened internal networks, and now steers the lab's hunt for high-impact 0-days. When a target is called unbreakable, that is usually where he starts reading code."
+  },
+  {
+    "name": "Elena Vukovic",
+    "handle": "sh4dowbyte",
+    "role": "Web Exploitation Lead",
+    "certs": [
+      "CWEE",
+      "OSWE"
+    ],
+    "focus": "web app & source-code 0-days",
+    "bio": "Elena lives in the gap between what a web app is supposed to do and what its source code actually allows. She chains auth bypasses, deserialization flaws, and logic bugs into full pre-auth RCE, then writes the exploit that proves it beyond doubt. Her whitebox reviews have a habit of turning \"low severity\" findings into headline CVEs."
+  },
+  {
+    "name": "Marcus Adeyemi",
+    "handle": "greyw0lf",
+    "role": "AD / Red Team Lead",
+    "certs": [
+      "OSEP",
+      "CAPE"
+    ],
+    "focus": "Active Directory & lateral movement",
+    "bio": "Marcus treats a corporate network like a puzzle box, moving from a single foothold to Domain Admin with tooling that stays a step ahead of EDR. He specializes in Active Directory abuse, evasion, and the quiet tradecraft that separates a real adversary from a noisy scanner. His post-exploitation write-ups double as a masterclass for the rest of the team."
+  },
+  {
+    "name": "Sofia Marchetti",
+    "handle": "vect0r",
+    "role": "AI Research Engineer",
+    "certs": [
+      "CAPE"
+    ],
+    "focus": "LLM-assisted vulnerability discovery",
+    "bio": "Sofia builds the models and pipelines that let LoSec read code and reason about vulnerabilities at machine scale. She fuses program analysis with LLM-driven triage so human researchers spend their time on the bugs that actually matter. Half her work is finding flaws; the other half is teaching a machine to find them first."
+  },
+  {
+    "name": "Kenji Watanabe",
+    "handle": "n1bble",
+    "role": "Vulnerability Researcher",
+    "certs": [
+      "CWEE"
+    ],
+    "focus": "memory corruption & fuzzing",
+    "bio": "Kenji goes deep on the native layer, chasing memory corruption bugs through fuzzers, sanitizers, and long nights in a debugger. He turns crashes nobody else can reproduce into clean, weaponizable primitives. If it parses untrusted input in C, he assumes it is already broken and sets out to prove it."
+  }
+]

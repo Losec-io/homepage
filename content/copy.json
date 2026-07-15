@@ -1,0 +1,59 @@
+{
+  "hero": {
+    "eyebrow": "AI Security Research Lab",
+    "headline": "We hunt the 0-days before they hunt you",
+    "headlineAccent": "0-days",
+    "subheadline": "LoSec pairs autonomous AI agents with elite offensive researchers to break software the way real attackers do — then hands you the fix before anyone else knows the door was open.",
+    "primaryCta": "Request a threat briefing",
+    "secondaryCta": "Read our disclosures",
+    "terminalLines": [
+      "$ losec scan --target ./vendor --depth exhaustive",
+      "[+] AI engine online · 18,204 code paths mapped in 9.3s",
+      "[!] candidate: heap overflow in libparse @ 0x4f2a1c",
+      "[✓] exploit primitive confirmed — unauth RCE, reachable",
+      "[>] generating PoC + patch diff · notifying vendor",
+      "[✓] 0-day #147 logged · CVSS 9.8 · embargo active"
+    ]
+  },
+  "stats": [
+    {
+      "value": "147+",
+      "label": "0-days discovered & disclosed"
+    },
+    {
+      "value": "9.3s",
+      "label": "avg. time to first finding"
+    },
+    {
+      "value": "40M+",
+      "label": "lines of code audited by AI"
+    },
+    {
+      "value": "4",
+      "label": "elite offensive certifications held"
+    }
+  ],
+  "vulnsWeFound": {
+    "eyebrow": "Proof, not promises",
+    "title": "Bugs we broke first",
+    "description": "Every finding starts as a hypothesis and ends as a working proof-of-concept. From memory corruption in parsers to logic flaws in auth flows, here's a look at the vulnerabilities our AI surfaced and our researchers weaponized — all responsibly disclosed."
+  },
+  "blog": {
+    "eyebrow": "From the lab",
+    "title": "Field notes on breaking software",
+    "description": "Deep technical write-ups, exploit chains, and the research methods behind our disclosures. No fluff — just how the bug was found, why it mattered, and how we turned an AI hunch into a CVE."
+  },
+  "vulnsList": {
+    "eyebrow": "Disclosure ledger",
+    "title": "The running tally",
+    "description": "A live index of CVEs, advisories, and vendor coordinations credited to LoSec. Filter by severity, product, or class — every entry links to the full technical breakdown."
+  },
+  "ctaBanner": {
+    "title": "Find out what's already inside your stack",
+    "description": "Give our AI your attack surface and we'll show you what a determined adversary would find first. Confidential, researcher-led, and fast.",
+    "cta": "Book a briefing"
+  },
+  "trustBar": {
+    "label": "Backed by hands-on offensive credentials — CAPE · CWEE · OSWE · OSEP"
+  }
+}

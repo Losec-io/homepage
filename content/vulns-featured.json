@@ -1,0 +1,68 @@
+[
+  {
+    "ref": "LSEC-2026-003",
+    "title": "Unauthenticated RCE in Northwind API Gateway via template injection in the routing engine",
+    "vendor": "Northwind",
+    "product": "Northwind API Gateway",
+    "severity": "Critical",
+    "cvss": "9.8",
+    "type": "Remote Code Execution",
+    "date": "2026-02-11",
+    "blurb": "The gateway evaluates route-rewrite rules through a server-side template engine that never leaves sandbox mode off — except it does. A crafted Host header walks straight into the expression evaluator, and one request turns an edge proxy into a shell. No auth, no user interaction, pre-patch chain reconstructed end to end."
+  },
+  {
+    "ref": "LSEC-2026-006",
+    "title": "SSO auth bypass in Aperture Identity Broker via SAML assertion confusion",
+    "vendor": "Aperture",
+    "product": "Aperture Identity Broker",
+    "severity": "Critical",
+    "cvss": "9.1",
+    "type": "Authentication Bypass",
+    "date": "2026-03-27",
+    "blurb": "Aperture canonicalizes SAML XML before signature validation but reads attributes after — a classic comment-splitting mismatch. Inject one XML comment into the NameID and you sign in as anyone, including the tenant admin. We forged a valid session for a fictional CISO account in under a minute of interaction."
+  },
+  {
+    "ref": "LSEC-2026-010",
+    "title": "Cloud-metadata SSRF in Helios Storage Connector escalates to credential theft",
+    "vendor": "Helios",
+    "product": "Helios Storage Connector",
+    "severity": "High",
+    "cvss": "8.6",
+    "type": "Server-Side Request Forgery",
+    "date": "2026-04-19",
+    "blurb": "The connector's remote-import feature validates URLs with a hostname allowlist, then re-resolves DNS at fetch time — a textbook TOCTOU. A rebinding record pivots the fetch to 169.254.169.254 and hands back instance-role credentials. From upload form to cloud keys in three requests."
+  },
+  {
+    "ref": "LSEC-2026-013",
+    "title": "Insecure deserialization to RCE in Cortex ML Model Registry artifact loader",
+    "vendor": "Cortex",
+    "product": "Cortex Model Registry",
+    "severity": "High",
+    "cvss": "8.8",
+    "type": "Insecure Deserialization",
+    "date": "2026-05-22",
+    "blurb": "Registry ingests uploaded model artifacts and unpickles them to read metadata before any policy check runs. A weaponized artifact executes on the ingestion worker with registry service privileges — a supply-chain foothold inside the MLOps pipeline itself. We demonstrated code exec on a pushed model, no reviewer approval required."
+  },
+  {
+    "ref": "LSEC-2026-016",
+    "title": "Namespace-boundary privilege escalation in Meshwork Service Mesh Controller",
+    "vendor": "Meshwork",
+    "product": "Meshwork Mesh Controller",
+    "severity": "High",
+    "cvss": "7.5",
+    "type": "Privilege Escalation",
+    "date": "2026-06-09",
+    "blurb": "The controller trusts a sidecar-supplied namespace claim when minting mTLS identities but never binds it to the workload's actual scope. A compromised pod requests a certificate for a neighboring namespace and inherits its traffic policy — lateral movement with a valid, mesh-issued identity. Tenant isolation, dissolved."
+  },
+  {
+    "ref": "LSEC-2026-019",
+    "title": "Blind SQL injection in Solstice Analytics Platform report filter API",
+    "vendor": "Solstice",
+    "product": "Solstice Analytics Platform",
+    "severity": "High",
+    "cvss": "8.2",
+    "type": "SQL Injection",
+    "date": "2026-06-30",
+    "blurb": "A JSON filter operator on the saved-report endpoint is concatenated into the query builder while every other field is dutifully parameterized — one forgotten branch. Time-based blind injection reads the full customer schema, including hashed credentials and API tokens, from a low-privilege analyst account. We exfiltrated a synthetic dataset to prove reach."
+  }
+]

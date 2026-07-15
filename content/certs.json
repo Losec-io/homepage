@@ -1,0 +1,26 @@
+[
+  {
+    "code": "CAPE",
+    "name": "Certified Active Directory Pentesting Expert",
+    "issuer": "Altered Security",
+    "domain": "Active Directory"
+  },
+  {
+    "code": "CWEE",
+    "name": "Certified Web Exploitation Expert",
+    "issuer": "Hack The Box",
+    "domain": "Web Exploitation"
+  },
+  {
+    "code": "OSWE",
+    "name": "OffSec Web Expert",
+    "issuer": "OffSec",
+    "domain": "Whitebox Web"
+  },
+  {
+    "code": "OSEP",
+    "name": "OffSec Experienced Penetration Tester",
+    "issuer": "OffSec",
+    "domain": "Evasion & Red Team"
+  }
+]
