@@ -9,29 +9,38 @@
    modifiers work everywhere.
    ========================================================================== */
 :root {
-  --c-ink: 6 7 9;            /* #060709 page canvas       */
-  --c-panel: 11 13 16;       /* #0B0D10 section panel     */
-  --c-surface: 18 21 26;     /* #12151A card              */
-  --c-raised: 23 27 34;      /* #171B22 raised / hover    */
-  --c-line: 28 33 39;        /* #1C2127 hairline          */
-  --c-line-strong: 42 49 58; /* #2A313A                   */
-  --c-fg: 236 241 234;       /* #ECF1EA primary text      */
-  --c-muted: 152 162 155;    /* #98A29B secondary text    */
-  --c-faint: 90 99 93;       /* #5A635D muted text        */
-  --c-haze: 110 120 113;     /* #6E7871 mono metadata     */
-  --c-acid: 180 255 57;      /* #B4FF39 THE accent        */
-  --c-acid-dim: 123 180 36;  /* #7BB424                   */
-  --c-ember: 255 106 61;     /* #FF6A3D counter-accent    */
-  --c-ember-dim: 194 78 40;  /* #C24E28                   */
-  --c-success: 88 227 142;   /* #58E38E patched/disclosed */
-  --c-critical: 255 90 71;   /* #FF5A47                   */
-  --c-high: 255 145 66;      /* #FF9142                   */
-  --c-medium: 224 189 74;    /* #E0BD4A                   */
-  --c-info: 255 214 51;      /* #FFD633                   */
+  /* Brand: losec.io — teal perimeter, single coral breach. Dark, teal-tinted
+     near-black canvas. Colors ship as space-separated RGB channels. */
+  --c-ink: 10 19 15;         /* #0A130F page canvas       */
+  --c-panel: 14 24 20;       /* #0E1814 section panel     */
+  --c-surface: 19 32 27;     /* #13201B card (~brand ink) */
+  --c-raised: 26 42 36;      /* #1A2A24 raised / hover    */
+  --c-line: 34 51 45;        /* #22332D hairline          */
+  --c-line-strong: 49 71 62; /* #31473E                   */
+  --c-fg: 232 240 236;       /* #E8F0EC primary text      */
+  --c-muted: 148 166 158;    /* #94A69E secondary text    */
+  --c-faint: 94 110 103;     /* #5E6E67 muted text        */
+  --c-haze: 119 133 126;     /* #77857E mono metadata     */
 
-  --gridline: rgb(var(--c-fg) / 0.045);
+  /* teal = THE accent (brand primary). "acid" token kept as the internal
+     name for the bright signal so existing utilities map straight over. */
+  --c-acid: 93 202 165;      /* #5DCAA5 teal-light — signal on dark */
+  --c-acid-dim: 29 158 117;  /* #1D9E75 teal — the perimeter ring   */
+  --c-mint: 159 225 203;     /* #9FE1CB soft mint — center dot      */
+
+  /* coral = the ONE breach accent. Never buttons / links / backgrounds. */
+  --c-ember: 240 122 92;     /* #F07A5C coral (readable on dark) */
+  --c-ember-dim: 176 74 40;  /* #B04A28                          */
+
+  --c-success: 127 217 180;  /* #7FD9B4 patched/disclosed */
+  --c-critical: 216 90 48;   /* #D85A30 coral — breach = critical */
+  --c-high: 227 154 75;      /* #E39A4B amber   */
+  --c-medium: 217 195 122;   /* #D9C37A gold    */
+  --c-info: 159 225 203;     /* #9FE1CB mint    */
+
+  --gridline: rgb(var(--c-fg) / 0.04);
   --scanline: rgb(var(--c-acid) / 0.03);
-  --plasma: rgb(var(--c-acid) / 0.1);
+  --plasma: rgb(var(--c-acid) / 0.09);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in: cubic-bezier(0.5, 0, 0.75, 0);
@@ -138,20 +147,19 @@
   }
 
   .text-display {
-    font-family: 'Fraunces', ui-serif, Georgia, serif;
-    font-weight: 900;
+    font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
     font-size: clamp(2.7rem, 6.2vw, 6.25rem);
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-    font-optical-sizing: auto;
+    line-height: 1.03;
+    letter-spacing: -0.035em;
   }
 
   .section-title {
-    font-family: 'Fraunces', ui-serif, Georgia, serif;
+    font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
     font-weight: 600;
     font-size: clamp(1.9rem, 3.4vw, 3rem);
-    line-height: 1.05;
-    letter-spacing: -0.025em;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
   }
 
   .hairline {
@@ -264,10 +272,10 @@
     margin-top: 1.15rem;
   }
   .prose-losec h2 {
-    @apply mt-12 mb-1 font-display text-2xl font-semibold tracking-tightest text-fg;
+    @apply mt-12 mb-1 font-display text-2xl font-bold tracking-tightest text-fg;
   }
   .prose-losec h3 {
-    @apply mt-9 mb-1 font-display text-xl font-semibold tracking-tightest text-fg;
+    @apply mt-9 mb-1 font-display text-xl font-bold tracking-tightest text-fg;
   }
   .prose-losec p {
     @apply text-muted;

@@ -29,12 +29,15 @@ const columns = [
       <div class="grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <div>
           <AppLogo />
-          <p class="mt-5 max-w-xs text-sm leading-relaxed text-muted">
+          <p class="mt-4 font-mono text-[0.66rem] uppercase tracking-[0.22em] text-acid-dim">
+            Zero days, minus one
+          </p>
+          <p class="mt-4 max-w-xs text-sm leading-relaxed text-muted">
             An AI security research lab. We pair autonomous agents with elite
             offensive researchers to find the 0-days before attackers do.
           </p>
           <div class="mt-6 flex items-center gap-2 font-mono text-[0.7rem] text-haze">
-            <span class="h-1.5 w-1.5 rounded-full bg-ember animate-ember" />
+            <span class="h-1.5 w-1.5 rounded-full bg-mint animate-ember" />
             losec://targets · scanning
           </div>
         </div>

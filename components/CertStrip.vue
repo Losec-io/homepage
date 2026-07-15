@@ -19,7 +19,7 @@ import copy from '~/content/copy.json'
           :class="[i < 2 ? 'border-b md:border-b-0' : '', i % 2 === 0 ? 'border-r md:border-r-0' : '']"
         >
           <div class="flex items-baseline justify-between">
-            <span class="font-display text-3xl font-black tracking-tightest text-fg transition-colors group-hover/reticle:text-acid">
+            <span class="font-display text-3xl font-bold tracking-tightest text-fg transition-colors group-hover/reticle:text-acid">
               {{ cert.code }}
             </span>
             <span class="font-mono text-[0.6rem] uppercase tracking-[0.12em] text-haze">{{ cert.issuer }}</span>

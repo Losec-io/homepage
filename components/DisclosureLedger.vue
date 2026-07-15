@@ -34,10 +34,10 @@ const legend = [
           <div class="sticky top-24 flex flex-col gap-6">
             <div class="border border-line bg-surface p-4">
               <p class="status-line mb-3 flex items-center gap-2">
-                <span class="h-1.5 w-1.5 rounded-full bg-ember animate-ember" />
+                <span class="h-1.5 w-1.5 rounded-full bg-mint animate-ember" />
                 losec://targets
               </p>
-              <p class="font-display text-3xl font-black tracking-tightest text-fg">147</p>
+              <p class="font-display text-3xl font-bold tracking-tightest text-fg">147</p>
               <p class="mt-1 font-mono text-[0.66rem] uppercase tracking-[0.1em] text-haze">
                 total disclosures
               </p>

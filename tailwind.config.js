@@ -29,11 +29,13 @@ export default {
         faint: c('--c-faint'),        // muted text
         haze: c('--c-haze'),          // mono metadata
         acid: {
-          DEFAULT: c('--c-acid'),     // the ONE accent — lock/found
-          dim: c('--c-acid-dim'),
+          DEFAULT: c('--c-acid'),     // teal signal — the accent
+          dim: c('--c-acid-dim'),     // brand teal (perimeter ring)
         },
+        teal: c('--c-acid-dim'),      // brand primary teal
+        mint: c('--c-mint'),          // soft mint highlight / live dot
         ember: {
-          DEFAULT: c('--c-ember'),    // counter-accent — live/heat
+          DEFAULT: c('--c-ember'),    // coral — reserved for breach
           dim: c('--c-ember-dim'),
         },
         success: c('--c-success'),
@@ -45,7 +47,7 @@ export default {
         low: c('--c-acid'),
       },
       fontFamily: {
-        display: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
+        display: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         sans: ['"IBM Plex Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },

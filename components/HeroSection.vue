@@ -48,8 +48,9 @@ const done = computed(() => shown.value >= hero.terminalLines.length)
       <!-- copy column -->
       <div>
         <div class="mb-7 inline-flex items-center gap-2.5 border border-line bg-surface/60 px-3 py-1.5">
-          <span class="h-1.5 w-1.5 rounded-full bg-ember animate-ember" />
+          <span class="h-1.5 w-1.5 rounded-full bg-mint animate-ember" />
           <span class="kicker text-muted">{{ hero.eyebrow }}</span>
+          <span class="hidden font-mono text-[0.6rem] uppercase tracking-[0.22em] text-acid-dim sm:inline">· zero days, minus one</span>
         </div>
 
         <h1 class="text-display text-fg">
@@ -73,7 +74,7 @@ const done = computed(() => shown.value >= hero.terminalLines.length)
         <!-- inline stat strip -->
         <dl class="mt-12 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-line pt-8 sm:grid-cols-4 sm:gap-x-4">
           <div v-for="s in stats" :key="s.label" class="min-w-0">
-            <dt class="font-display text-2xl font-black tracking-tightest text-fg sm:text-[1.75rem]">{{ s.value }}</dt>
+            <dt class="font-display text-2xl font-bold tracking-tightest text-fg sm:text-[1.75rem]">{{ s.value }}</dt>
             <dd class="mt-1 font-mono text-[0.66rem] uppercase leading-tight tracking-[0.08em] text-haze">{{ s.label }}</dd>
           </div>
         </dl>
@@ -90,8 +91,8 @@ const done = computed(() => shown.value >= hero.terminalLines.length)
               <span class="h-2.5 w-2.5 rounded-full border border-line-strong" />
             </div>
             <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-haze">exhaustive scan</span>
-            <span class="inline-flex items-center gap-1.5 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-ember">
-              <span class="h-1.5 w-1.5 rounded-full bg-ember animate-ember" />
+            <span class="inline-flex items-center gap-1.5 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-mint">
+              <span class="h-1.5 w-1.5 rounded-full bg-mint animate-ember" />
               scanning
             </span>
           </div>
@@ -119,7 +120,10 @@ const done = computed(() => shown.value >= hero.terminalLines.length)
           <!-- footer status -->
           <div class="flex items-center justify-between border-t border-line px-4 py-2 font-mono text-[0.64rem] text-haze">
             <span>CAL 07.2026</span>
-            <span>0-day #147 · CVSS 9.8</span>
+            <span class="inline-flex items-center gap-1.5">
+              <span class="h-1.5 w-1.5 rounded-full bg-ember" />
+              breach · 0-day #147 · CVSS 9.8
+            </span>
           </div>
         </div>
       </ReticleFrame>
