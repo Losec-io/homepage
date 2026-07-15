@@ -2,14 +2,354 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base scaffold — design tokens are layered in on top of this. */
+/* ============================================================================
+   LoSec — "RETICLE // Locked Instrument" design system
+   Whisper-cool noir · one acid-green lock-on signal · calibrated like an
+   instrument. Colors ship as space-separated RGB channels so Tailwind opacity
+   modifiers work everywhere.
+   ========================================================================== */
+:root {
+  --c-ink: 6 7 9;            /* #060709 page canvas       */
+  --c-panel: 11 13 16;       /* #0B0D10 section panel     */
+  --c-surface: 18 21 26;     /* #12151A card              */
+  --c-raised: 23 27 34;      /* #171B22 raised / hover    */
+  --c-line: 28 33 39;        /* #1C2127 hairline          */
+  --c-line-strong: 42 49 58; /* #2A313A                   */
+  --c-fg: 236 241 234;       /* #ECF1EA primary text      */
+  --c-muted: 152 162 155;    /* #98A29B secondary text    */
+  --c-faint: 90 99 93;       /* #5A635D muted text        */
+  --c-haze: 110 120 113;     /* #6E7871 mono metadata     */
+  --c-acid: 180 255 57;      /* #B4FF39 THE accent        */
+  --c-acid-dim: 123 180 36;  /* #7BB424                   */
+  --c-ember: 255 106 61;     /* #FF6A3D counter-accent    */
+  --c-ember-dim: 194 78 40;  /* #C24E28                   */
+  --c-success: 88 227 142;   /* #58E38E patched/disclosed */
+  --c-critical: 255 90 71;   /* #FF5A47                   */
+  --c-high: 255 145 66;      /* #FF9142                   */
+  --c-medium: 224 189 74;    /* #E0BD4A                   */
+  --c-info: 255 214 51;      /* #FFD633                   */
+
+  --gridline: rgb(var(--c-fg) / 0.045);
+  --scanline: rgb(var(--c-acid) / 0.03);
+  --plasma: rgb(var(--c-acid) / 0.1);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.5, 0, 0.75, 0);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  color-scheme: dark;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    scrollbar-color: rgb(var(--c-line-strong)) transparent;
   }
 
   body {
-    @apply bg-[#05070a] text-white antialiased;
+    @apply bg-ink font-sans text-fg antialiased;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'cv05', 'ss01';
+  }
+
+  ::selection {
+    background: rgb(var(--c-acid) / 0.85);
+    color: rgb(var(--c-ink));
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tightest text-fg;
+    font-optical-sizing: auto;
+  }
+
+  a {
+    text-underline-offset: 3px;
+  }
+
+  /* focus-visible ring appears instantly (never animated) */
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-acid));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--c-line-strong));
+    border: 3px solid rgb(var(--c-ink));
+    border-radius: 999px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Background field layers (fixed, near-imperceptible)
+   ------------------------------------------------------------------------- */
+@layer components {
+  .fx-grid {
+    background-image:
+      linear-gradient(to right, var(--gridline) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--gridline) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(125% 90% at 50% -5%, #000 32%, transparent 80%);
+    mask-image: radial-gradient(125% 90% at 50% -5%, #000 32%, transparent 80%);
+  }
+
+  .fx-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+  }
+
+  /* scanline overlay — ONLY on terminal surfaces */
+  .scanlines {
+    position: relative;
+  }
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0 2px,
+      var(--scanline) 2px 3px
+    );
+    mix-blend-mode: screen;
+  }
+
+  /* single localized plasma glow */
+  .fx-plasma {
+    background: radial-gradient(60% 55% at 50% 30%, var(--plasma), transparent 70%);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Typographic instruments
+   ------------------------------------------------------------------------- */
+@layer components {
+  .kicker {
+    @apply font-mono text-kicker uppercase text-haze;
+    letter-spacing: 0.18em;
+  }
+
+  .text-display {
+    font-family: 'Fraunces', ui-serif, Georgia, serif;
+    font-weight: 900;
+    font-size: clamp(2.7rem, 6.2vw, 6.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-optical-sizing: auto;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', ui-serif, Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 3.4vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+
+  .hairline {
+    @apply border-line;
+  }
+
+  .status-line {
+    @apply font-mono text-[0.7rem] text-haze;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------------- */
+@layer components {
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 whitespace-nowrap
+           font-mono text-[0.8rem] font-medium tracking-wide transition-all duration-150;
+    padding: 0.72rem 1.25rem;
+  }
+
+  .btn-primary {
+    @apply btn text-ink;
+    background: rgb(var(--c-acid));
+    box-shadow: 4px 4px 0 0 rgb(var(--c-acid-dim));
+  }
+  .btn-primary:hover {
+    background: rgb(var(--c-acid) / 0.9);
+  }
+  .btn-primary:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 0 rgb(var(--c-acid-dim));
+  }
+
+  .btn-ghost {
+    @apply btn text-fg;
+    background: rgb(var(--c-surface));
+    border: 1px solid rgb(var(--c-line-strong));
+    box-shadow: 4px 4px 0 0 rgb(var(--c-line-strong));
+  }
+  .btn-ghost:hover {
+    border-color: rgb(var(--c-acid) / 0.5);
+    color: rgb(var(--c-acid));
+  }
+  .btn-ghost:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 0 rgb(var(--c-line-strong));
+  }
+
+  .link-underline {
+    @apply relative font-mono text-[0.8rem] text-fg transition-colors duration-150;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: rgb(var(--c-acid-dim));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.18s var(--ease-out);
+  }
+  .link-underline:hover {
+    @apply text-acid;
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Panels / cards
+   ------------------------------------------------------------------------- */
+@layer components {
+  .panel {
+    @apply relative border border-line bg-surface;
+  }
+
+  .card-hud {
+    @apply relative border border-line bg-surface transition-all duration-200;
+    box-shadow: 4px 4px 0 0 rgb(var(--c-line-strong));
+  }
+  .card-hud:hover {
+    background: color-mix(in oklab, rgb(var(--c-fg)) 5%, rgb(var(--c-surface)));
+    border-color: rgb(var(--c-line-strong));
+  }
+
+  /* graticule edge ticks along the top of a locked panel */
+  .graticule-top {
+    background-image: repeating-linear-gradient(
+      to right,
+      rgb(var(--c-line-strong)) 0 1px,
+      transparent 1px 14px
+    );
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Blog prose
+   ------------------------------------------------------------------------- */
+@layer components {
+  .prose-losec {
+    @apply text-[1.02rem] leading-[1.75] text-muted;
+    max-width: 68ch;
+  }
+  .prose-losec > * + * {
+    margin-top: 1.15rem;
+  }
+  .prose-losec h2 {
+    @apply mt-12 mb-1 font-display text-2xl font-semibold tracking-tightest text-fg;
+  }
+  .prose-losec h3 {
+    @apply mt-9 mb-1 font-display text-xl font-semibold tracking-tightest text-fg;
+  }
+  .prose-losec p {
+    @apply text-muted;
+  }
+  .prose-losec strong {
+    @apply font-semibold text-fg;
+  }
+  .prose-losec a {
+    @apply text-acid underline decoration-acid/40 hover:decoration-acid;
+  }
+  .prose-losec ul,
+  .prose-losec ol {
+    @apply space-y-2 pl-5 text-muted;
+  }
+  .prose-losec ul {
+    list-style: none;
+  }
+  .prose-losec ul > li {
+    @apply relative;
+  }
+  .prose-losec ul > li::before {
+    content: '—';
+    @apply absolute -left-5 text-acid-dim;
+  }
+  .prose-losec ol {
+    list-style: decimal;
+  }
+  .prose-losec ol > li::marker {
+    @apply font-mono text-acid-dim;
+  }
+  .prose-losec blockquote {
+    @apply border-l-2 border-acid/40 bg-panel px-5 py-3 font-mono text-[0.85rem] text-muted;
+  }
+  .prose-losec code {
+    @apply rounded-xs bg-panel px-1.5 py-0.5 font-mono text-[0.85em] text-acid;
+    border: 1px solid rgb(var(--c-line));
+  }
+  .prose-losec pre {
+    @apply relative overflow-x-auto border border-line bg-panel p-5 font-mono text-[0.82rem] leading-relaxed text-fg/90;
+    box-shadow: 4px 4px 0 0 rgb(var(--c-line-strong));
+  }
+  .prose-losec pre code {
+    @apply border-0 bg-transparent p-0 text-fg/90;
+  }
+  .prose-losec hr {
+    @apply my-10 border-line;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Scroll reveal + page transition
+   ------------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.25s var(--ease-out);
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
   }
 }

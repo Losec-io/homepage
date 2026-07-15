@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="7" fill="#05070a"/>
-  <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" stroke="#1c2530"/>
-  <path d="M9 8.5v13.5h8.5" stroke="#3ff7c1" stroke-width="2.4" stroke-linecap="square"/>
-  <path d="M20 10h3v12h-3" stroke="#3ff7c1" stroke-width="2.4" stroke-linecap="square" opacity="0.5"/>
+  <rect width="32" height="32" rx="7" fill="#060709"/>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" stroke="#1C2127"/>
+  <!-- lock-on reticle corners -->
+  <path d="M6 9V6h3M26 9V6h-3M6 23v3h3M26 23v3h-3" stroke="#B4FF39" stroke-width="1.6"/>
+  <!-- L mark -->
+  <path d="M11.5 10v12h9" stroke="#B4FF39" stroke-width="2.6" stroke-linecap="square"/>
 </svg>
