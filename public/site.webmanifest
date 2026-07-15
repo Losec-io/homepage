@@ -1,0 +1,14 @@
+{
+  "name": "LoSec — AI Security Research Lab",
+  "short_name": "LoSec",
+  "description": "AI-driven vulnerability discovery and 0-day research.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A130F",
+  "theme_color": "#0A130F",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/apple-touch-icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/losec-mark-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

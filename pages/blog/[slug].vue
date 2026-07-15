@@ -13,16 +13,34 @@ marked.setOptions({ gfm: true, breaks: false })
 const html = marked.parse(post.body) as string
 const related = relatedPosts(slug, 2)
 
+const url = `${siteConfig.url}/blog/${slug}`
 const shareText = encodeURIComponent(`${post.title} — via ${siteConfig.socials.xHandle}`)
-const shareUrl = encodeURIComponent(`${siteConfig.url}/blog/${slug}`)
+const shareUrl = encodeURIComponent(url)
 
-useSeoMeta({
+useSeo({
   title: post.title,
   description: post.excerpt,
-  ogTitle: post.title,
-  ogDescription: post.excerpt,
-  ogType: 'article',
-  twitterCard: 'summary_large_image',
+  type: 'article',
+  jsonLd: {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: { '@type': 'Person', name: post.author },
+    publisher: {
+      '@type': 'Organization',
+      name: 'LoSec',
+      url: siteConfig.url,
+      logo: { '@type': 'ImageObject', url: `${siteConfig.url}/losec-mark-512.png` },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    image: `${siteConfig.url}/og-image-1200x630.png`,
+    keywords: post.tags.join(', '),
+    articleSection: post.category,
+    url,
+  },
 })
 </script>
 

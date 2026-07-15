@@ -23,25 +23,28 @@ export default defineNuxtConfig({
             'LoSec is an AI-driven security research lab discovering vulnerabilities and 0-days at machine speed.',
         },
         { name: 'theme-color', content: '#0A130F' },
-        // Open Graph
+        { name: 'author', content: 'LoSec' },
+        // Open Graph — site-level defaults; per-page title/description/url/canonical
+        // are set via the useSeo() composable so each route is unique.
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'LoSec' },
-        { property: 'og:title', content: 'LoSec — AI Security Research Lab' },
-        {
-          property: 'og:description',
-          content: 'AI-driven vulnerability discovery and 0-day research. Zero days, minus one.',
-        },
+        { property: 'og:locale', content: 'en_US' },
         { property: 'og:image', content: 'https://losec.io/og-image-1200x630.png' },
-        { property: 'og:url', content: 'https://losec.io' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:type', content: 'image/png' },
+        { property: 'og:image:alt', content: 'LoSec — AI Security Research Lab. Zero days, minus one.' },
         // Twitter
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:site', content: '@Losec_io' },
         { name: 'twitter:image', content: 'https://losec.io/og-image-1200x630.png' },
+        { name: 'twitter:image:alt', content: 'LoSec — AI Security Research Lab.' },
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
         { rel: 'apple-touch-icon', href: '/apple-touch-icon-180.png' },
+        { rel: 'manifest', href: '/site.webmanifest' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         // Space Grotesk (display · brand) · IBM Plex Sans (body) · IBM Plex Mono (data)
@@ -57,7 +60,7 @@ export default defineNuxtConfig({
     preset: 'vercel',
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/blog', '/contact', '/member'],
+      routes: ['/', '/blog', '/contact', '/member', '/sitemap.xml'],
     },
   },
 

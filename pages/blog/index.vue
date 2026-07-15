@@ -1,12 +1,12 @@
 <script setup lang="ts">
 const [feature, ...rest] = blogPosts
 
-useSeoMeta({
+useSeo({
   title: 'Research Blog',
+  socialTitle: 'LoSec Research Blog',
   description:
     'Deep technical write-ups, exploit chains and research methodology from the LoSec lab — 0-day disclosures, tooling and threat research.',
-  ogTitle: 'LoSec Research Blog',
-  ogDescription: 'Field notes on breaking software.',
+  type: 'website',
 })
 </script>
 

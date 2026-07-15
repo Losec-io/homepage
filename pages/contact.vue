@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useSeoMeta({
+useSeo({
   title: 'Contact',
   description:
     'Request a threat briefing, report a vulnerability, or start a partnership with the LoSec AI security research lab.',

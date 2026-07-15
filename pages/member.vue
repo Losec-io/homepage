@@ -4,7 +4,7 @@ import certs from '~/content/certs.json'
 
 const certMap = Object.fromEntries(certs.map((c) => [c.code, c]))
 
-useSeoMeta({
+useSeo({
   title: 'Members',
   description:
     'The operators behind LoSec — offensive researchers holding CAPE, CWEE, OSWE and OSEP, building AI that finds vulnerabilities at machine scale.',
