@@ -71,18 +71,16 @@ async function loop() {
 
     // idle at the returned prompt, then restart
     phase.value = 'done'
-    await wait(4200)
+    await wait(3200)
   }
 }
 
+// The scanner always animates. Reduced-motion only drops the big sweeping beam;
+// the typewriter + line streaming stay so the panel still reads as a live
+// terminal.
+const showBeam = ref(true)
 onMounted(() => {
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (reduce) {
-    typed.value = command
-    outCount.value = output.length
-    phase.value = 'done'
-    return
-  }
+  showBeam.value = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   loop()
 })
 onUnmounted(() => {
@@ -155,9 +153,9 @@ onUnmounted(() => {
             </span>
           </div>
 
-          <!-- scan beam — replays on each scan run -->
+          <!-- scan beam — replays on each scan run (skipped under reduced-motion) -->
           <div
-            v-if="scanning"
+            v-if="scanning && showBeam"
             :key="runs"
             aria-hidden="true"
             class="pointer-events-none absolute inset-x-0 top-0 z-10 h-16 animate-scanbeam"
