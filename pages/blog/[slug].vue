@@ -21,7 +21,8 @@ const img = useImage()
 function optimizeImages(rawHtml: string): string {
   return rawHtml.replace(/(<img\b[^>]*?\bsrc=")([^"]+)("[^>]*>)/g, (m, pre, src, post) => {
     if (!/^https?:\/\//.test(src)) return m
-    const optimized = img(src, { width: 1000, quality: 72, format: 'webp' })
+    // wider + higher quality so text screenshots stay crisp on hi-DPI screens
+    const optimized = img(src, { width: 1600, quality: 90, format: 'webp' })
     let tag = pre + optimized + post
     if (!/\bloading=/.test(tag)) tag = tag.replace('<img', '<img loading="lazy"')
     if (!/\bdecoding=/.test(tag)) tag = tag.replace('<img', '<img decoding="async"')

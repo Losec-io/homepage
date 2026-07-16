@@ -15,7 +15,9 @@ export default defineNuxtConfig({
   image: {
     // allow optimizing the remote blog images hosted on GitHub raw
     domains: ['raw.githubusercontent.com'],
-    quality: 72,
+    // higher quality — the blog images are text/UI screenshots that go soft
+    // when over-compressed
+    quality: 86,
     format: ['webp'],
   },
 
