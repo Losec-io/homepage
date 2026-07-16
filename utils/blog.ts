@@ -1,6 +1,6 @@
-import posts from '~/content/blog.json'
-
-export interface BlogPost {
+// Blog posts are sourced at build/prerender time from the Losec-io/blogs repo
+// via the /api/publications routes. This is the client-facing shape.
+export interface Publication {
   title: string
   slug: string
   excerpt: string
@@ -9,18 +9,6 @@ export interface BlogPost {
   date: string
   author: string
   readTime: string
-  body: string
-}
-
-// newest first
-export const blogPosts: BlogPost[] = [...(posts as BlogPost[])].sort((a, b) =>
-  b.date.localeCompare(a.date),
-)
-
-export function getPost(slug: string): BlogPost | undefined {
-  return blogPosts.find((p) => p.slug === slug)
-}
-
-export function relatedPosts(slug: string, n = 2): BlogPost[] {
-  return blogPosts.filter((p) => p.slug !== slug).slice(0, n)
+  thumbnail: string | null
+  body?: string
 }

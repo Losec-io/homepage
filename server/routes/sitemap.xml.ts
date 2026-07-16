@@ -1,13 +1,6 @@
-import blog from '~/content/blog.json'
-
 const BASE = 'https://losec.io'
 
-interface Post {
-  slug: string
-  date: string
-}
-
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const staticEntries = [
     { path: '/', priority: '1.0', changefreq: 'weekly' },
     { path: '/blog', priority: '0.9', changefreq: 'weekly' },
@@ -15,7 +8,8 @@ export default defineEventHandler((event) => {
     { path: '/contact', priority: '0.5', changefreq: 'yearly' },
   ]
 
-  const postEntries = (blog as Post[]).map((p) => ({
+  const pubs = await getPublications().catch(() => [])
+  const postEntries = pubs.map((p) => ({
     path: `/blog/${p.slug}`,
     priority: '0.7',
     changefreq: 'monthly',

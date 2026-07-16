@@ -1,5 +1,8 @@
 <script setup lang="ts">
-const posts = blogPosts.slice(0, 4)
+import type { Publication } from '~/utils/blog'
+
+const { data } = await useAsyncData('publications', () => $fetch<Publication[]>('/api/publications'))
+const posts = computed(() => (data.value ?? []).slice(0, 4))
 </script>
 
 <template>
@@ -18,7 +21,7 @@ const posts = blogPosts.slice(0, 4)
         </SectionHeader>
       </Reveal>
 
-      <div class="mt-12 border-t border-line">
+      <div v-if="posts.length" class="mt-12 border-t border-line">
         <Reveal v-for="(p, i) in posts" :key="p.slug" :delay="i * 40">
           <NuxtLink :to="`/blog/${p.slug}`" class="group/reticle block">
             <ReticleFrame>
@@ -54,6 +57,10 @@ const posts = blogPosts.slice(0, 4)
           </NuxtLink>
         </Reveal>
       </div>
+
+      <p v-else class="mt-12 border-t border-line pt-10 font-mono text-sm text-haze">
+        // publications incoming — first drops land soon.
+      </p>
     </div>
   </section>
 </template>

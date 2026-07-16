@@ -29,16 +29,11 @@ export default defineNuxtConfig({
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'LoSec' },
         { property: 'og:locale', content: 'en_US' },
-        { property: 'og:image', content: 'https://losec.io/og-image-1200x630.png' },
-        { property: 'og:image:width', content: '1200' },
-        { property: 'og:image:height', content: '630' },
-        { property: 'og:image:type', content: 'image/png' },
-        { property: 'og:image:alt', content: 'LoSec — AI Security Research Lab. Zero days, minus one.' },
+        // og:image + dimensions are set per-page in useSeo() (posts use their
+        // own thumbnail, other pages use the default 1200×630 card).
         // Twitter
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:site', content: '@Losec_io' },
-        { name: 'twitter:image', content: 'https://losec.io/og-image-1200x630.png' },
-        { name: 'twitter:image:alt', content: 'LoSec — AI Security Research Lab.' },
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },

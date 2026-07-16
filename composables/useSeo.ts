@@ -27,6 +27,8 @@ export function useSeo(input: SeoInput = {}) {
     : `${siteConfig.url}/og-image-1200x630.png`
 
   const socialTitle = input.socialTitle ?? input.title
+  const usingDefaultImage = !input.image
+  const imageAlt = socialTitle ?? 'LoSec — AI Security Research Lab'
 
   useSeoMeta({
     title: input.title,
@@ -36,9 +38,15 @@ export function useSeo(input: SeoInput = {}) {
     ogType: input.type ?? 'website',
     ogUrl: url,
     ogImage: image,
+    ogImageAlt: imageAlt,
+    // dimensions are only accurate for the default card
+    ...(usingDefaultImage
+      ? { ogImageWidth: 1200, ogImageHeight: 630, ogImageType: 'image/png' }
+      : {}),
     twitterTitle: socialTitle,
     twitterDescription: input.description,
     twitterImage: image,
+    twitterImageAlt: imageAlt,
     robots: input.noindex ? 'noindex, nofollow' : 'index, follow',
   })
 

@@ -277,6 +277,13 @@
   .prose-losec h3 {
     @apply mt-9 mb-1 font-display text-xl font-bold tracking-tightest text-fg;
   }
+  .prose-losec h4 {
+    @apply mt-7 mb-1 font-display text-lg font-bold tracking-tightest text-fg;
+  }
+  .prose-losec img {
+    @apply my-7 w-full border border-line;
+    box-shadow: 4px 4px 0 0 rgb(var(--c-line-strong));
+  }
   .prose-losec p {
     @apply text-muted;
   }

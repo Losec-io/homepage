@@ -1,34 +1,42 @@
 <script setup lang="ts">
 import { marked } from 'marked'
+import type { Publication } from '~/utils/blog'
 
 const route = useRoute()
 const slug = route.params.slug as string
-const post = getPost(slug)
 
-if (!post) {
+const { data: post } = await useAsyncData(`pub-${slug}`, () =>
+  $fetch<Publication>(`/api/publications/${slug}`),
+)
+
+if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Writeup not found', fatal: true })
 }
 
+const { data: all } = await useAsyncData('publications', () => $fetch<Publication[]>('/api/publications'))
+const related = computed(() => (all.value ?? []).filter((p) => p.slug !== slug).slice(0, 2))
+
 marked.setOptions({ gfm: true, breaks: false })
-const html = marked.parse(post.body) as string
-const related = relatedPosts(slug, 2)
+const html = computed(() => marked.parse(post.value?.body ?? '') as string)
 
 const url = `${siteConfig.url}/blog/${slug}`
-const shareText = encodeURIComponent(`${post.title} — via ${siteConfig.socials.xHandle}`)
+const image = post.value.thumbnail || `${siteConfig.url}/og-image-1200x630.png`
+const shareText = encodeURIComponent(`${post.value.title} — via ${siteConfig.socials.xHandle}`)
 const shareUrl = encodeURIComponent(url)
 
 useSeo({
-  title: post.title,
-  description: post.excerpt,
+  title: post.value.title,
+  description: post.value.excerpt,
   type: 'article',
+  image: post.value.thumbnail || undefined,
   jsonLd: {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.excerpt,
-    datePublished: post.date,
-    dateModified: post.date,
-    author: { '@type': 'Person', name: post.author },
+    headline: post.value.title,
+    description: post.value.excerpt,
+    datePublished: post.value.date,
+    dateModified: post.value.date,
+    author: { '@type': 'Person', name: post.value.author },
     publisher: {
       '@type': 'Organization',
       name: 'LoSec',
@@ -36,16 +44,20 @@ useSeo({
       logo: { '@type': 'ImageObject', url: `${siteConfig.url}/losec-mark-512.png` },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
-    image: `${siteConfig.url}/og-image-1200x630.png`,
-    keywords: post.tags.join(', '),
-    articleSection: post.category,
+    image,
+    keywords: post.value.tags.join(', '),
+    articleSection: post.value.category,
     url,
   },
 })
+
+function monogram(author: string) {
+  return author.replace('@', '').slice(0, 2).toUpperCase()
+}
 </script>
 
 <template>
-  <div>
+  <div v-if="post">
     <!-- header -->
     <section class="relative overflow-hidden border-b border-line">
       <div aria-hidden="true" class="fx-plasma pointer-events-none absolute -right-20 top-0 h-full w-1/2 opacity-40" />
@@ -65,7 +77,7 @@ useSeo({
 
         <div class="mt-7 flex items-center gap-3 border-t border-line pt-6">
           <span class="flex h-9 w-9 items-center justify-center border border-line bg-surface font-mono text-xs text-acid">
-            {{ post.author.replace('@', '').slice(0, 2).toUpperCase() }}
+            {{ monogram(post.author) }}
           </span>
           <div class="font-mono text-[0.78rem]">
             <p class="text-fg">{{ post.author }}</p>
