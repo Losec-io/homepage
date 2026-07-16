@@ -1,7 +1,7 @@
 [
   {
     "name": "Nguyen Van Hiep",
-    "handle": "@hypnguyen1209",
+    "handle": "hypnguyen1209",
     "role": "Co-founder & 0-day Researcher",
     "certs": [
       
@@ -11,7 +11,7 @@
   },
   {
     "name": "Le The Thang",
-    "handle": "@lilthawg29",
+    "handle": "lilthawg29",
     "role": "Co-founder & 0-day Researcher",
     "certs": [
       "CWEE",
@@ -22,7 +22,7 @@
   },
   {
     "name": "Dang Le Quoc Khanh",
-    "handle": "@khanhdlq",
+    "handle": "khanhdlq",
     "role": "Senior Security Researcher & Red Teamer",
     "certs": [
     ],
@@ -31,7 +31,7 @@
   },
   {
     "name": "Nguyen Quang Ba",
-    "handle": "@hibana",
+    "handle": "hibana",
     "role": "Offensive Mobile Researcher",
     "certs": [
       "CDSA"
