@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import ledger from '~/content/vulns.json'
+import ledgerData from '~/content/vulns.json'
+
+// Display the ledger ordered by CVSS score, most severe first.
+const ledger = [...ledgerData].sort((a, b) => Number(b.cvss) - Number(a.cvss))
 
 const open = ref<string[]>([ledger[0]?.ref])
 function toggle(ref: string) {
