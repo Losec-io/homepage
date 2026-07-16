@@ -3,7 +3,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: true },
 
-  modules: ['@nuxtjs/tailwindcss', '@vercel/analytics/nuxt', '@nuxt/image'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@vercel/analytics/nuxt',
+    '@vercel/speed-insights/nuxt',
+    '@nuxt/image',
+  ],
 
   css: ['~/assets/css/tailwind.css'],
 
