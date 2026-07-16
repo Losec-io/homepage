@@ -54,12 +54,14 @@ useSeo({
 
                 <!-- thumbnail, or a mono placeholder -->
                 <div class="relative hidden overflow-hidden border border-line bg-panel md:block">
-                  <img
+                  <NuxtImg
                     v-if="feature.thumbnail"
                     :src="feature.thumbnail"
                     :alt="feature.title"
-                    class="h-full w-full object-cover"
+                    sizes="(max-width: 1024px) 50vw, 600px"
+                    fit="cover"
                     loading="lazy"
+                    class="h-full w-full object-cover"
                   />
                   <template v-else>
                     <div class="scanlines absolute inset-0" />

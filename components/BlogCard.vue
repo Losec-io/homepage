@@ -9,11 +9,15 @@ defineProps<{ post: Publication }>()
       <article class="card-hud flex h-full flex-col overflow-hidden">
         <!-- thumbnail -->
         <div v-if="post.thumbnail" class="relative aspect-[16/9] overflow-hidden border-b border-line bg-panel">
-          <img
+          <NuxtImg
             :src="post.thumbnail"
             :alt="post.title"
-            class="h-full w-full object-cover opacity-90 transition-opacity duration-200 group-hover/reticle:opacity-100"
+            width="440"
+            height="248"
+            fit="cover"
+            sizes="(max-width: 768px) 100vw, 440px"
             loading="lazy"
+            class="h-full w-full object-cover opacity-90 transition-opacity duration-200 group-hover/reticle:opacity-100"
           />
         </div>
 

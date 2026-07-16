@@ -15,8 +15,20 @@ if (!post.value) {
 const { data: all } = await useAsyncData('publications', () => $fetch<Publication[]>('/api/publications'))
 const related = computed(() => (all.value ?? []).filter((p) => p.slug !== slug).slice(0, 2))
 
-// body is rendered to HTML (with syntax highlighting) on the server
-const html = computed(() => post.value?.bodyHtml ?? '')
+// body is rendered to HTML (with syntax highlighting) on the server;
+// route each <img> through @nuxt/image for resized/optimized delivery
+const img = useImage()
+function optimizeImages(rawHtml: string): string {
+  return rawHtml.replace(/(<img\b[^>]*?\bsrc=")([^"]+)("[^>]*>)/g, (m, pre, src, post) => {
+    if (!/^https?:\/\//.test(src)) return m
+    const optimized = img(src, { width: 1000, quality: 72, format: 'webp' })
+    let tag = pre + optimized + post
+    if (!/\bloading=/.test(tag)) tag = tag.replace('<img', '<img loading="lazy"')
+    if (!/\bdecoding=/.test(tag)) tag = tag.replace('<img', '<img decoding="async"')
+    return tag
+  })
+}
+const html = computed(() => optimizeImages(post.value?.bodyHtml ?? ''))
 
 // wire the per-code-block copy buttons (content is v-html, so delegate)
 const proseEl = ref<HTMLElement | null>(null)

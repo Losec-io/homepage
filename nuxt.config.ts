@@ -3,9 +3,16 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: true },
 
-  modules: ['@nuxtjs/tailwindcss', '@vercel/analytics/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@vercel/analytics/nuxt', '@nuxt/image'],
 
   css: ['~/assets/css/tailwind.css'],
+
+  image: {
+    // allow optimizing the remote blog images hosted on GitHub raw
+    domains: ['raw.githubusercontent.com'],
+    quality: 72,
+    format: ['webp'],
+  },
 
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },

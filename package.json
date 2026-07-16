@@ -16,6 +16,7 @@
     "nuxt": "^3.19.2"
   },
   "dependencies": {
+    "@nuxt/image": "^2.0.0",
     "@vercel/analytics": "^2.0.1",
     "highlight.js": "^11.11.1",
     "marked": "^18.0.6",
