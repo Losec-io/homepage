@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { marked } from 'marked'
 import type { Publication } from '~/utils/blog'
 
 const route = useRoute()
@@ -16,8 +15,8 @@ if (!post.value) {
 const { data: all } = await useAsyncData('publications', () => $fetch<Publication[]>('/api/publications'))
 const related = computed(() => (all.value ?? []).filter((p) => p.slug !== slug).slice(0, 2))
 
-marked.setOptions({ gfm: true, breaks: false })
-const html = computed(() => marked.parse(post.value?.body ?? '') as string)
+// body is rendered to HTML (with syntax highlighting) on the server
+const html = computed(() => post.value?.bodyHtml ?? '')
 
 const url = `${siteConfig.url}/blog/${slug}`
 const image = post.value.thumbnail || `${siteConfig.url}/og-image-1200x630.png`

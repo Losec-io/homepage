@@ -11,4 +11,5 @@ export interface Publication {
   readTime: string
   thumbnail: string | null
   body?: string
+  bodyHtml?: string
 }

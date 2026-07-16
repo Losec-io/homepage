@@ -1,6 +1,63 @@
+import { marked } from 'marked'
+import { markedHighlight } from 'marked-highlight'
+import hljs from 'highlight.js/lib/core'
+
+// Register a curated set of languages (core keeps the server bundle small and
+// avoids OOM from bundling all ~190 grammars). Aliases (js, py, sh, yml, html…)
+// register automatically with each language.
+import plaintext from 'highlight.js/lib/languages/plaintext'
+import javascript from 'highlight.js/lib/languages/javascript'
+import typescript from 'highlight.js/lib/languages/typescript'
+import python from 'highlight.js/lib/languages/python'
+import bash from 'highlight.js/lib/languages/bash'
+import shell from 'highlight.js/lib/languages/shell'
+import json from 'highlight.js/lib/languages/json'
+import yaml from 'highlight.js/lib/languages/yaml'
+import xml from 'highlight.js/lib/languages/xml'
+import cLang from 'highlight.js/lib/languages/c'
+import cpp from 'highlight.js/lib/languages/cpp'
+import csharp from 'highlight.js/lib/languages/csharp'
+import go from 'highlight.js/lib/languages/go'
+import rust from 'highlight.js/lib/languages/rust'
+import java from 'highlight.js/lib/languages/java'
+import php from 'highlight.js/lib/languages/php'
+import ruby from 'highlight.js/lib/languages/ruby'
+import sql from 'highlight.js/lib/languages/sql'
+import diff from 'highlight.js/lib/languages/diff'
+import http from 'highlight.js/lib/languages/http'
+import dockerfile from 'highlight.js/lib/languages/dockerfile'
+import ini from 'highlight.js/lib/languages/ini'
+import powershell from 'highlight.js/lib/languages/powershell'
+import x86asm from 'highlight.js/lib/languages/x86asm'
+import markdown from 'highlight.js/lib/languages/markdown'
+
+for (const [name, def] of Object.entries({
+  plaintext, javascript, typescript, python, bash, shell, json, yaml, xml,
+  c: cLang, cpp, csharp, go, rust, java, php, ruby, sql, diff, http,
+  dockerfile, ini, powershell, x86asm, markdown,
+})) {
+  hljs.registerLanguage(name, def)
+}
+
 // Pulls the real research blog from the decoupled Losec-io/blogs repo.
 // publications.json holds the metadata (same idea as content/blog.json); each
 // post's body lives in <path>/README.md with images relative to that folder.
+// Markdown → HTML (with fenced-code syntax highlighting) happens here, server
+// side, so highlight.js never ships to the browser bundle.
+marked.use(
+  markedHighlight({
+    langPrefix: 'hljs language-',
+    highlight(code, lang) {
+      const language = lang && hljs.getLanguage(lang) ? lang : 'plaintext'
+      try {
+        return hljs.highlight(code, { language }).value
+      } catch {
+        return hljs.highlight(code, { language: 'plaintext' }).value
+      }
+    },
+  }),
+)
+marked.setOptions({ gfm: true, breaks: false })
 
 interface RawPub {
   title: string
@@ -30,6 +87,7 @@ export interface PubMeta {
 
 export interface PubFull extends PubMeta {
   body: string
+  bodyHtml: string
 }
 
 const REPO = 'https://raw.githubusercontent.com/Losec-io/blogs/main'
@@ -86,5 +144,6 @@ export async function getPublication(slug: string): Promise<PubFull | null> {
       (_m, alt: string, src: string) => `![${alt}](${base}/${src.replace(/^\.\//, '')})`,
     )
 
-  return { ...toMeta(p), body }
+  const bodyHtml = marked.parse(body) as string
+  return { ...toMeta(p), body, bodyHtml }
 }
