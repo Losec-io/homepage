@@ -18,6 +18,56 @@ const related = computed(() => (all.value ?? []).filter((p) => p.slug !== slug).
 // body is rendered to HTML (with syntax highlighting) on the server
 const html = computed(() => post.value?.bodyHtml ?? '')
 
+// wire the per-code-block copy buttons (content is v-html, so delegate)
+const proseEl = ref<HTMLElement | null>(null)
+
+function legacyCopy(text: string): boolean {
+  try {
+    const ta = document.createElement('textarea')
+    ta.value = text
+    ta.setAttribute('readonly', '')
+    ta.style.position = 'fixed'
+    ta.style.opacity = '0'
+    document.body.appendChild(ta)
+    ta.select()
+    const ok = document.execCommand('copy')
+    document.body.removeChild(ta)
+    return ok
+  } catch {
+    return false
+  }
+}
+
+function markCopied(btn: HTMLElement) {
+  const label = btn.querySelector('.code-block__copy-label')
+  btn.setAttribute('data-copied', 'true')
+  if (label) label.textContent = 'Copied'
+  window.setTimeout(() => {
+    btn.removeAttribute('data-copied')
+    if (label) label.textContent = 'Copy'
+  }, 1600)
+}
+
+function onProseClick(e: MouseEvent) {
+  const btn = (e.target as HTMLElement).closest('.code-block__copy') as HTMLElement | null
+  if (!btn) return
+  const code = btn.closest('.code-block')?.querySelector('pre code')
+  const text = code?.textContent ?? ''
+  if (!text) return
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(text).then(
+      () => markCopied(btn),
+      () => {
+        if (legacyCopy(text)) markCopied(btn)
+      },
+    )
+  } else if (legacyCopy(text)) {
+    markCopied(btn)
+  }
+}
+onMounted(() => proseEl.value?.addEventListener('click', onProseClick))
+onUnmounted(() => proseEl.value?.removeEventListener('click', onProseClick))
+
 const url = `${siteConfig.url}/blog/${slug}`
 const image = post.value.thumbnail || `${siteConfig.url}/og-image-1200x630.png`
 const shareText = encodeURIComponent(`${post.value.title} — via ${siteConfig.socials.xHandle}`)
@@ -88,7 +138,7 @@ function monogram(author: string) {
 
     <!-- body -->
     <article class="mx-auto max-w-3xl px-5 py-14 sm:px-8">
-      <div class="prose-losec" v-html="html" />
+      <div ref="proseEl" class="prose-losec" v-html="html" />
 
       <!-- tags + share -->
       <div class="mt-14 flex flex-col gap-6 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">

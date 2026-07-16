@@ -59,6 +59,38 @@ marked.use(
 )
 marked.setOptions({ gfm: true, breaks: false })
 
+const escapeText = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+
+// Wrap each highlighted code block with a header bar: language label + a copy
+// button (wired client-side via event delegation). hljs escapes all angle
+// brackets in the code, so the </code></pre> terminator is unambiguous.
+function wrapCodeBlocks(html: string): string {
+  return html.replace(
+    /<pre><code class="hljs language-([^"]*)">([\s\S]*?)<\/code><\/pre>/g,
+    (_m, lang: string, code: string) => {
+      const label = escapeText(lang && lang.trim() ? lang.trim() : 'code')
+      const lineCount = code.replace(/\n+$/, '').split('\n').length
+      const gutter = Array.from({ length: lineCount }, (_, i) => i + 1).join('\n')
+      return (
+        '<div class="code-block">' +
+        '<div class="code-block__bar">' +
+        `<span class="code-block__lang">${label}</span>` +
+        '<button class="code-block__copy" type="button" data-copy aria-label="Copy code">' +
+        '<svg class="code-block__copy-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>' +
+        '<span class="code-block__copy-label">Copy</span>' +
+        '</button>' +
+        '</div>' +
+        '<div class="code-block__body">' +
+        `<span class="code-block__gutter" aria-hidden="true">${gutter}</span>` +
+        `<pre><code class="hljs language-${escapeText(lang)}">${code}</code></pre>` +
+        '</div>' +
+        '</div>'
+      )
+    },
+  )
+}
+
 interface RawPub {
   title: string
   slug: string
@@ -144,6 +176,6 @@ export async function getPublication(slug: string): Promise<PubFull | null> {
       (_m, alt: string, src: string) => `![${alt}](${base}/${src.replace(/^\.\//, '')})`,
     )
 
-  const bodyHtml = marked.parse(body) as string
+  const bodyHtml = wrapCodeBlocks(marked.parse(body) as string)
   return { ...toMeta(p), body, bodyHtml }
 }
