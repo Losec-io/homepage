@@ -422,19 +422,61 @@
     box-shadow: none;
   }
 
-  /* mermaid diagrams */
-  .prose-losec pre.mermaid {
-    @apply my-7 flex justify-center overflow-x-auto border border-line bg-panel p-6;
+  /* mermaid diagrams — framed "schematic" panel */
+  .prose-losec .mermaid-figure {
+    @apply relative my-8 border border-line bg-panel;
     box-shadow: 4px 4px 0 0 rgb(var(--c-line-strong));
+  }
+  .prose-losec .mermaid-figure__bar {
+    @apply flex items-center justify-between gap-3 border-b border-line bg-surface px-4 py-2.5;
+  }
+  .prose-losec .mermaid-figure__label {
+    @apply inline-flex items-center gap-2 font-mono text-[0.62rem] font-medium uppercase tracking-[0.16em] text-acid-dim;
+  }
+  .prose-losec .mermaid-figure__meta {
+    @apply font-mono text-[0.6rem] uppercase tracking-[0.14em] text-haze;
+  }
+  .prose-losec .mermaid-figure pre.mermaid {
+    @apply relative m-0 flex min-h-[8rem] items-center justify-center overflow-x-auto border-0 p-8;
+    background-color: transparent;
+    background-image: radial-gradient(rgb(var(--c-fg) / 0.045) 1px, transparent 1px);
+    background-size: 20px 20px;
+    box-shadow: none;
     line-height: normal;
   }
-  /* hide the raw source until Mermaid has rendered the SVG */
-  .prose-losec pre.mermaid:not([data-processed='true']) {
-    @apply min-h-[5rem] items-center text-transparent;
+  /* loading state — hide raw source, show a hint, until Mermaid renders */
+  .prose-losec .mermaid-figure pre.mermaid:not([data-processed='true']) {
+    font-size: 0;
+    color: transparent;
   }
-  .prose-losec pre.mermaid svg {
+  .prose-losec .mermaid-figure pre.mermaid:not([data-processed='true'])::before {
+    content: 'rendering diagram…';
+    @apply font-mono lowercase tracking-wide text-haze;
+    font-size: 0.72rem;
+  }
+  .prose-losec .mermaid-figure pre.mermaid svg {
     max-width: 100%;
     height: auto;
+  }
+  /* reticle corners (brand lock-on framing) */
+  .prose-losec .mermaid-figure .reticle-corner {
+    @apply pointer-events-none absolute z-10 h-3 w-3 transition-colors duration-200;
+    border-color: rgb(var(--c-acid) / 0.5);
+  }
+  .prose-losec .mermaid-figure:hover .reticle-corner {
+    border-color: rgb(var(--c-acid));
+  }
+  .prose-losec .mermaid-figure .reticle-corner--tl {
+    @apply -left-px -top-px border-l-2 border-t-2;
+  }
+  .prose-losec .mermaid-figure .reticle-corner--tr {
+    @apply -right-px -top-px border-r-2 border-t-2;
+  }
+  .prose-losec .mermaid-figure .reticle-corner--bl {
+    @apply -bottom-px -left-px border-b-2 border-l-2;
+  }
+  .prose-losec .mermaid-figure .reticle-corner--br {
+    @apply -bottom-px -right-px border-b-2 border-r-2;
   }
   .prose-losec hr {
     @apply my-10 border-line;

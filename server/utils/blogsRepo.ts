@@ -73,7 +73,21 @@ function wrapCodeBlocks(html: string): string {
       // `code` is the HTML-escaped source; the browser un-escapes it via
       // textContent when Mermaid reads the element.
       if (lang.trim() === 'mermaid') {
-        return `<pre class="mermaid" role="img" aria-label="Diagram">${code}</pre>`
+        return (
+          '<figure class="mermaid-figure">' +
+          '<span class="reticle-corner reticle-corner--tl" aria-hidden="true"></span>' +
+          '<span class="reticle-corner reticle-corner--tr" aria-hidden="true"></span>' +
+          '<span class="reticle-corner reticle-corner--bl" aria-hidden="true"></span>' +
+          '<span class="reticle-corner reticle-corner--br" aria-hidden="true"></span>' +
+          '<figcaption class="mermaid-figure__bar">' +
+          '<span class="mermaid-figure__label">' +
+          '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 12h12M6 12v4M18 12v4"/></svg>' +
+          'Diagram</span>' +
+          '<span class="mermaid-figure__meta">losec://schematic</span>' +
+          '</figcaption>' +
+          `<pre class="mermaid" role="img" aria-label="Diagram">${code}</pre>` +
+          '</figure>'
+        )
       }
       const label = escapeText(lang && lang.trim() ? lang.trim() : 'code')
       const lineCount = code.replace(/\n+$/, '').split('\n').length
