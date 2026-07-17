@@ -421,6 +421,21 @@
     @apply m-0 min-w-0 flex-1 overflow-x-auto border-0 bg-transparent px-4 py-5 leading-relaxed;
     box-shadow: none;
   }
+
+  /* mermaid diagrams */
+  .prose-losec pre.mermaid {
+    @apply my-7 flex justify-center overflow-x-auto border border-line bg-panel p-6;
+    box-shadow: 4px 4px 0 0 rgb(var(--c-line-strong));
+    line-height: normal;
+  }
+  /* hide the raw source until Mermaid has rendered the SVG */
+  .prose-losec pre.mermaid:not([data-processed='true']) {
+    @apply min-h-[5rem] items-center text-transparent;
+  }
+  .prose-losec pre.mermaid svg {
+    max-width: 100%;
+    height: auto;
+  }
   .prose-losec hr {
     @apply my-10 border-line;
   }

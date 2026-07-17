@@ -78,7 +78,47 @@ function onProseClick(e: MouseEvent) {
     markCopied(btn)
   }
 }
-onMounted(() => proseEl.value?.addEventListener('click', onProseClick))
+// render any ```mermaid blocks into diagrams (lazy — only when present)
+async function renderMermaid() {
+  const nodes = proseEl.value?.querySelectorAll<HTMLElement>(
+    'pre.mermaid:not([data-processed="true"])',
+  )
+  if (!nodes || !nodes.length) return
+  try {
+    const mermaid = (await import('mermaid')).default
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: 'strict',
+      theme: 'base',
+      fontFamily: '"IBM Plex Mono", ui-monospace, monospace',
+      themeVariables: {
+        darkMode: true,
+        background: 'transparent',
+        primaryColor: '#13201B',
+        primaryBorderColor: '#31473E',
+        primaryTextColor: '#E8F0EC',
+        secondaryColor: '#1A2A24',
+        tertiaryColor: '#0E1814',
+        lineColor: '#5DCAA5',
+        textColor: '#E8F0EC',
+        nodeBorder: '#31473E',
+        clusterBkg: '#0E1814',
+        clusterBorder: '#31473E',
+        edgeLabelBackground: '#0E1814',
+        fontSize: '13px',
+      },
+    })
+    await mermaid.run({ nodes: Array.from(nodes) })
+  } catch {
+    // rendering failed — reveal the raw source as a fallback
+    nodes.forEach((n) => n.setAttribute('data-processed', 'true'))
+  }
+}
+
+onMounted(async () => {
+  proseEl.value?.addEventListener('click', onProseClick)
+  await renderMermaid()
+})
 onUnmounted(() => proseEl.value?.removeEventListener('click', onProseClick))
 
 const url = `${siteConfig.url}/blog/${slug}`

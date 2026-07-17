@@ -69,6 +69,12 @@ function wrapCodeBlocks(html: string): string {
   return html.replace(
     /<pre><code class="hljs language-([^"]*)">([\s\S]*?)<\/code><\/pre>/g,
     (_m, lang: string, code: string) => {
+      // mermaid blocks are rendered as diagrams client-side, not as code.
+      // `code` is the HTML-escaped source; the browser un-escapes it via
+      // textContent when Mermaid reads the element.
+      if (lang.trim() === 'mermaid') {
+        return `<pre class="mermaid" role="img" aria-label="Diagram">${code}</pre>`
+      }
       const label = escapeText(lang && lang.trim() ? lang.trim() : 'code')
       const lineCount = code.replace(/\n+$/, '').split('\n').length
       const gutter = Array.from({ length: lineCount }, (_, i) => i + 1).join('\n')

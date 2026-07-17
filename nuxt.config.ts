@@ -70,6 +70,8 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       routes: ['/', '/blog', '/contact', '/member', '/sitemap.xml'],
+      // don't try to prerender/cache optimized image URLs (handled at runtime)
+      ignore: ['/_ipx', '/_vercel/image'],
     },
   },
 
