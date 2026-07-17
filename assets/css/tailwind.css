@@ -438,8 +438,8 @@
   }
   .prose-losec .mermaid-figure pre.mermaid {
     @apply relative m-0 flex min-h-[8rem] items-center justify-center overflow-x-auto border-0 p-8;
-    background-color: transparent;
-    background-image: radial-gradient(rgb(var(--c-fg) / 0.045) 1px, transparent 1px);
+    background-color: #ffffff;
+    background-image: radial-gradient(rgb(20 32 28 / 0.07) 1px, transparent 1px);
     background-size: 20px 20px;
     box-shadow: none;
     line-height: normal;
@@ -451,7 +451,8 @@
   }
   .prose-losec .mermaid-figure pre.mermaid:not([data-processed='true'])::before {
     content: 'rendering diagram…';
-    @apply font-mono lowercase tracking-wide text-haze;
+    @apply font-mono lowercase tracking-wide;
+    color: #8a9793;
     font-size: 0.72rem;
   }
   .prose-losec .mermaid-figure pre.mermaid svg {
