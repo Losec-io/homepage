@@ -86,28 +86,14 @@ async function renderMermaid() {
   if (!nodes || !nodes.length) return
   try {
     const mermaid = (await import('mermaid')).default
+    // claude-mermaid style: stock neutral (grayscale) theme on warm paper,
+    // so author classDef colors (red/yellow sinks) read clearly
     mermaid.initialize({
       startOnLoad: false,
       securityLevel: 'strict',
-      theme: 'base',
-      look: 'handDrawn',
+      theme: 'neutral',
       fontFamily: '"IBM Plex Sans", ui-sans-serif, sans-serif',
-      themeVariables: {
-        darkMode: false,
-        background: '#ffffff',
-        primaryColor: '#ffffff',
-        primaryBorderColor: '#0F6E56',
-        primaryTextColor: '#14201C',
-        secondaryColor: '#EAF6F0',
-        tertiaryColor: '#F4FBF8',
-        lineColor: '#1D9E75',
-        textColor: '#14201C',
-        nodeBorder: '#0F6E56',
-        clusterBkg: '#F4FBF8',
-        clusterBorder: '#0F6E56',
-        edgeLabelBackground: '#ffffff',
-        fontSize: '14px',
-      },
+      themeVariables: { fontSize: '14px' },
     })
     await mermaid.run({ nodes: Array.from(nodes) })
   } catch {

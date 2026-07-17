@@ -438,9 +438,7 @@
   }
   .prose-losec .mermaid-figure pre.mermaid {
     @apply relative m-0 flex min-h-[8rem] items-center justify-center overflow-x-auto border-0 p-8;
-    background-color: #ffffff;
-    background-image: radial-gradient(rgb(20 32 28 / 0.07) 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-color: #fbf6ec;
     box-shadow: none;
     line-height: normal;
   }
