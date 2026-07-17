@@ -23,9 +23,12 @@ function optimizeImages(rawHtml: string): string {
     if (!/^https?:\/\//.test(src)) return m
     // wider + higher quality so text screenshots stay crisp on hi-DPI screens
     const optimized = img(src, { width: 1600, quality: 90, format: 'webp' })
+    const zoom = img(src, { width: 2200, quality: 92, format: 'webp' })
     let tag = pre + optimized + post
     if (!/\bloading=/.test(tag)) tag = tag.replace('<img', '<img loading="lazy"')
     if (!/\bdecoding=/.test(tag)) tag = tag.replace('<img', '<img decoding="async"')
+    // higher-res source for the click-to-zoom lightbox
+    tag = tag.replace('<img', `<img data-zoom="${zoom}"`)
     return tag
   })
 }
@@ -61,23 +64,47 @@ function markCopied(btn: HTMLElement) {
   }, 1600)
 }
 
+// click-to-zoom lightbox for body images
+const zoomSrc = ref<string | null>(null)
+const zoomAlt = ref('')
+function closeZoom() {
+  zoomSrc.value = null
+}
+
 function onProseClick(e: MouseEvent) {
-  const btn = (e.target as HTMLElement).closest('.code-block__copy') as HTMLElement | null
-  if (!btn) return
-  const code = btn.closest('.code-block')?.querySelector('pre code')
-  const text = code?.textContent ?? ''
-  if (!text) return
-  if (navigator.clipboard?.writeText) {
-    navigator.clipboard.writeText(text).then(
-      () => markCopied(btn),
-      () => {
-        if (legacyCopy(text)) markCopied(btn)
-      },
-    )
-  } else if (legacyCopy(text)) {
-    markCopied(btn)
+  const el = e.target as HTMLElement
+
+  const btn = el.closest('.code-block__copy') as HTMLElement | null
+  if (btn) {
+    const code = btn.closest('.code-block')?.querySelector('pre code')
+    const text = code?.textContent ?? ''
+    if (!text) return
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(text).then(
+        () => markCopied(btn),
+        () => {
+          if (legacyCopy(text)) markCopied(btn)
+        },
+      )
+    } else if (legacyCopy(text)) {
+      markCopied(btn)
+    }
+    return
+  }
+
+  if (el.tagName === 'IMG') {
+    const im = el as HTMLImageElement
+    zoomAlt.value = im.getAttribute('alt') || ''
+    zoomSrc.value = im.getAttribute('data-zoom') || im.currentSrc || im.src
   }
 }
+
+function onKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape') closeZoom()
+}
+watch(zoomSrc, (v) => {
+  if (import.meta.client) document.body.style.overflow = v ? 'hidden' : ''
+})
 // render any ```mermaid blocks into diagrams (lazy — only when present)
 async function renderMermaid() {
   const nodes = proseEl.value?.querySelectorAll<HTMLElement>(
@@ -104,9 +131,14 @@ async function renderMermaid() {
 
 onMounted(async () => {
   proseEl.value?.addEventListener('click', onProseClick)
+  window.addEventListener('keydown', onKeydown)
   await renderMermaid()
 })
-onUnmounted(() => proseEl.value?.removeEventListener('click', onProseClick))
+onUnmounted(() => {
+  proseEl.value?.removeEventListener('click', onProseClick)
+  window.removeEventListener('keydown', onKeydown)
+  if (import.meta.client) document.body.style.overflow = ''
+})
 
 const url = `${siteConfig.url}/blog/${slug}`
 const image = post.value.thumbnail || `${siteConfig.url}/og-image-1200x630.png`
@@ -216,5 +248,43 @@ function monogram(author: string) {
         </div>
       </div>
     </section>
+
+    <!-- image zoom lightbox -->
+    <ClientOnly>
+      <Teleport to="body">
+        <Transition
+          enter-active-class="transition-opacity duration-200 ease-out"
+          enter-from-class="opacity-0"
+          leave-active-class="transition-opacity duration-150 ease-in"
+          leave-to-class="opacity-0"
+        >
+          <div
+            v-if="zoomSrc"
+            class="fixed inset-0 z-[100] flex cursor-zoom-out items-center justify-center bg-ink/92 p-4 backdrop-blur-sm sm:p-10"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Image preview"
+            @click="closeZoom"
+          >
+            <img
+              :src="zoomSrc"
+              :alt="zoomAlt"
+              class="max-h-full max-w-full border border-line-strong object-contain shadow-2xl"
+            />
+            <button
+              type="button"
+              class="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center border border-line-strong bg-surface/80 font-mono text-lg text-fg backdrop-blur transition-colors hover:border-acid/50 hover:text-acid"
+              aria-label="Close preview"
+              @click.stop="closeZoom"
+            >
+              ✕
+            </button>
+            <p class="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-[0.64rem] uppercase tracking-[0.14em] text-haze">
+              click anywhere · esc to close
+            </p>
+          </div>
+        </Transition>
+      </Teleport>
+    </ClientOnly>
   </div>
 </template>
