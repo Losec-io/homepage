@@ -331,57 +331,89 @@
     @apply border-0 bg-transparent p-0 text-fg/90;
   }
 
-  /* highlight.js — brand-aligned token theme (coral stays reserved for breach) */
+  /* highlight.js — rich functional token palette (like the severity ramp,
+     this is a place where chroma is allowed to multiply) */
   .prose-losec .hljs {
     background: transparent;
     color: rgb(var(--c-fg) / 0.9);
   }
   .prose-losec .hljs-comment,
   .prose-losec .hljs-quote {
-    color: rgb(var(--c-faint));
+    color: #6a7d74; /* muted green-gray */
     font-style: italic;
   }
+  /* keywords, control flow, storage, operators */
   .prose-losec .hljs-keyword,
   .prose-losec .hljs-selector-tag,
+  .prose-losec .hljs-literal,
+  .prose-losec .hljs-doctag {
+    color: #5dcaa5; /* teal */
+  }
+  /* functions & method names */
+  .prose-losec .hljs-title,
+  .prose-losec .hljs-title.function_,
+  .prose-losec .hljs-section {
+    color: #7fb2f0; /* soft blue */
+    font-weight: 500;
+  }
+  /* types, classes, built-ins */
   .prose-losec .hljs-built_in,
   .prose-losec .hljs-type,
-  .prose-losec .hljs-name,
-  .prose-losec .hljs-tag,
-  .prose-losec .hljs-doctag {
-    color: rgb(var(--c-acid));
+  .prose-losec .hljs-title.class_,
+  .prose-losec .hljs-class .hljs-title {
+    color: #e6c07b; /* gold */
   }
+  /* strings & regex */
   .prose-losec .hljs-string,
-  .prose-losec .hljs-attr,
-  .prose-losec .hljs-attribute,
   .prose-losec .hljs-regexp,
-  .prose-losec .hljs-symbol,
-  .prose-losec .hljs-bullet,
-  .prose-losec .hljs-property,
+  .prose-losec .hljs-char,
   .prose-losec .hljs-meta-string,
   .prose-losec .hljs-addition {
-    color: rgb(var(--c-mint));
+    color: #9fe1cb; /* mint */
   }
+  /* numbers & literals */
   .prose-losec .hljs-number,
-  .prose-losec .hljs-literal,
-  .prose-losec .hljs-variable,
-  .prose-losec .hljs-template-variable,
+  .prose-losec .hljs-symbol,
+  .prose-losec .hljs-bullet {
+    color: #e8955a; /* warm orange */
+  }
+  /* attributes & object properties */
+  .prose-losec .hljs-attr,
+  .prose-losec .hljs-attribute,
+  .prose-losec .hljs-property,
   .prose-losec .hljs-selector-attr,
   .prose-losec .hljs-selector-pseudo {
-    color: rgb(var(--c-high));
+    color: #63c5c0; /* cyan */
   }
-  .prose-losec .hljs-title,
-  .prose-losec .hljs-section,
+  /* variables, params, selectors */
+  .prose-losec .hljs-variable,
+  .prose-losec .hljs-template-variable,
+  .prose-losec .hljs-params,
   .prose-losec .hljs-selector-id,
   .prose-losec .hljs-selector-class {
-    color: rgb(var(--c-fg));
-    font-weight: 600;
+    color: #cbb6e8; /* soft lavender */
   }
+  /* markup tags & names */
+  .prose-losec .hljs-tag {
+    color: #8fa39a;
+  }
+  .prose-losec .hljs-name {
+    color: #e5847e; /* soft red */
+  }
+  /* decorators / preprocessor / meta */
   .prose-losec .hljs-meta,
-  .prose-losec .hljs-comment.hljs-meta {
-    color: rgb(var(--c-haze));
+  .prose-losec .hljs-meta-keyword {
+    color: #d9c37a; /* dim gold */
+  }
+  .prose-losec .hljs-operator,
+  .prose-losec .hljs-punctuation {
+    color: #8fa39a; /* muted */
   }
   .prose-losec .hljs-deletion {
-    color: rgb(var(--c-ember));
+    color: #f07a5c; /* coral */
+  }
+  .prose-losec .hljs-link {
+    text-decoration: underline;
   }
   .prose-losec .hljs-emphasis {
     font-style: italic;
