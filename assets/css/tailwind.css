@@ -463,6 +463,24 @@
   .prose-losec .mermaid-figure pre.mermaid[data-processed='true'] {
     cursor: zoom-in;
   }
+  /* stronger node borders / edges / label weight so the diagram reads crisply
+     (mermaid's own styles are id-scoped, hence !important) */
+  .prose-losec .mermaid-figure svg .node rect,
+  .prose-losec .mermaid-figure svg .node polygon,
+  .prose-losec .mermaid-figure svg .node circle,
+  .prose-losec .mermaid-figure svg .node path,
+  .prose-losec .mermaid-figure svg .cluster rect {
+    stroke-width: 1.5px !important;
+  }
+  .prose-losec .mermaid-figure svg .edgePaths path,
+  .prose-losec .mermaid-figure svg .flowchart-link {
+    stroke-width: 1.5px !important;
+  }
+  .prose-losec .mermaid-figure svg .nodeLabel,
+  .prose-losec .mermaid-figure svg .edgeLabel,
+  .prose-losec .mermaid-figure svg text {
+    font-weight: 500 !important;
+  }
 
   /* enlarged diagram inside the zoom lightbox (teleported, so not scoped) */
   .lightbox-diagram {
