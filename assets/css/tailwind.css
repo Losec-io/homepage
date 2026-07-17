@@ -460,6 +460,28 @@
     max-width: 100%;
     height: auto;
   }
+  .prose-losec .mermaid-figure pre.mermaid[data-processed='true'] {
+    cursor: zoom-in;
+  }
+
+  /* enlarged diagram inside the zoom lightbox (teleported, so not scoped) */
+  .lightbox-diagram {
+    @apply overflow-auto border border-line-strong p-6 sm:p-8;
+    /* definite width so the SVG has something to fill (mermaid SVGs collapse
+       in a shrink-to-fit box) */
+    width: min(92vw, 1100px);
+    max-height: 88vh;
+    background: #fbf6ec;
+    box-shadow: 6px 6px 0 0 rgb(var(--c-line-strong));
+  }
+  .lightbox-diagram svg {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 auto;
+  }
   /* reticle corners (brand lock-on framing) */
   .prose-losec .mermaid-figure .reticle-corner {
     @apply pointer-events-none absolute z-10 h-3 w-3 transition-colors duration-200;

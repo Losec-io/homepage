@@ -64,11 +64,14 @@ function markCopied(btn: HTMLElement) {
   }, 1600)
 }
 
-// click-to-zoom lightbox for body images
+// click-to-zoom lightbox for body images and diagrams
 const zoomSrc = ref<string | null>(null)
+const zoomSvg = ref<string | null>(null)
 const zoomAlt = ref('')
+const zoomOpen = computed(() => Boolean(zoomSrc.value || zoomSvg.value))
 function closeZoom() {
   zoomSrc.value = null
+  zoomSvg.value = null
 }
 
 function onProseClick(e: MouseEvent) {
@@ -92,6 +95,14 @@ function onProseClick(e: MouseEvent) {
     return
   }
 
+  // mermaid diagram → zoom the rendered SVG (vector, scales crisply)
+  const mmd = el.closest('pre.mermaid') as HTMLElement | null
+  if (mmd) {
+    const svg = mmd.querySelector('svg')
+    if (svg) zoomSvg.value = svg.outerHTML
+    return
+  }
+
   if (el.tagName === 'IMG') {
     const im = el as HTMLImageElement
     zoomAlt.value = im.getAttribute('alt') || ''
@@ -102,7 +113,7 @@ function onProseClick(e: MouseEvent) {
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Escape') closeZoom()
 }
-watch(zoomSrc, (v) => {
+watch(zoomOpen, (v) => {
   if (import.meta.client) document.body.style.overflow = v ? 'hidden' : ''
 })
 // render any ```mermaid blocks into diagrams (lazy — only when present)
@@ -259,18 +270,21 @@ function monogram(author: string) {
           leave-to-class="opacity-0"
         >
           <div
-            v-if="zoomSrc"
+            v-if="zoomOpen"
             class="fixed inset-0 z-[100] flex cursor-zoom-out items-center justify-center bg-ink/92 p-4 backdrop-blur-sm sm:p-10"
             role="dialog"
             aria-modal="true"
-            aria-label="Image preview"
+            aria-label="Preview"
             @click="closeZoom"
           >
             <img
+              v-if="zoomSrc"
               :src="zoomSrc"
               :alt="zoomAlt"
               class="max-h-full max-w-full border border-line-strong object-contain shadow-2xl"
             />
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <div v-else class="lightbox-diagram" v-html="zoomSvg" />
             <button
               type="button"
               class="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center border border-line-strong bg-surface/80 font-mono text-lg text-fg backdrop-blur transition-colors hover:border-acid/50 hover:text-acid"
