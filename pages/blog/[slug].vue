@@ -171,6 +171,15 @@ const url = `${siteConfig.url}/blog/${slug}`
 const image = post.value.thumbnail || `${siteConfig.url}/og-image-1200x630.png`
 const shareText = encodeURIComponent(`${post.value.title} — via ${siteConfig.socials.xHandle}`)
 const shareUrl = encodeURIComponent(url)
+// open via JS so ad/privacy blockers (which hide x.com/intent links) can't
+// strip the share button
+function shareOnX() {
+  window.open(
+    `https://x.com/intent/tweet?text=${shareText}&url=${shareUrl}`,
+    '_blank',
+    'noopener,noreferrer',
+  )
+}
 
 useSeo({
   title: post.value.title,
@@ -250,15 +259,14 @@ function monogram(author: string) {
         </div>
         <div class="flex items-center gap-3">
           <span class="font-mono text-[0.68rem] uppercase tracking-[0.1em] text-haze">Share</span>
-          <a
-            :href="`https://x.com/intent/tweet?text=${shareText}&url=${shareUrl}`"
-            target="_blank"
-            rel="noopener"
+          <button
+            type="button"
             aria-label="Share on X"
-            class="inline-flex h-9 w-9 items-center justify-center border border-line text-muted transition-colors hover:border-acid/40 hover:text-acid"
+            class="inline-flex h-9 w-9 cursor-pointer items-center justify-center border border-line text-muted transition-colors hover:border-acid/40 hover:text-acid"
+            @click="shareOnX"
           >
             <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" /></svg>
-          </a>
+          </button>
         </div>
       </div>
     </article>
