@@ -54,6 +54,12 @@ export default defineNuxtConfig({
         { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
         { rel: 'apple-touch-icon', href: '/apple-touch-icon-180.png' },
         { rel: 'manifest', href: '/site.webmanifest' },
+        {
+          rel: 'alternate',
+          type: 'application/rss+xml',
+          title: 'LoSec Research Blog',
+          href: '/rss.xml',
+        },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         // Space Grotesk (display · brand) · IBM Plex Sans (body) · IBM Plex Mono (data)
@@ -69,7 +75,7 @@ export default defineNuxtConfig({
     preset: 'vercel',
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/blog', '/contact', '/member', '/sitemap.xml'],
+      routes: ['/', '/blog', '/contact', '/member', '/sitemap.xml', '/rss.xml'],
       // don't try to prerender/cache optimized image URLs (handled at runtime)
       ignore: ['/_ipx', '/_vercel/image'],
     },

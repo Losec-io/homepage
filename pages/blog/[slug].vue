@@ -168,7 +168,15 @@ onUnmounted(() => {
 })
 
 const url = `${siteConfig.url}/blog/${slug}`
-const image = post.value.thumbnail || `${siteConfig.url}/og-image-1200x630.png`
+const ogDefault = `${siteConfig.url}/og-image-1200x630.png`
+// full-res thumbnail (absolute) first, guaranteed 1200×630 card as fallback
+const articleImages = post.value.thumbnail ? [post.value.thumbnail, ogDefault] : [ogDefault]
+const authorUrl = `${siteConfig.url}/member`
+const publishedISO = (() => {
+  const d = new Date(String(post.value.date).split(' ')[0])
+  return Number.isNaN(d.getTime()) ? post.value.date : d.toISOString()
+})()
+
 const shareText = encodeURIComponent(`${post.value.title} — via ${siteConfig.socials.xHandle}`)
 const shareUrl = encodeURIComponent(url)
 // open via JS so ad/privacy blockers (which hide x.com/intent links) can't
@@ -191,9 +199,9 @@ useSeo({
     '@type': 'BlogPosting',
     headline: post.value.title,
     description: post.value.excerpt,
-    datePublished: post.value.date,
-    dateModified: post.value.date,
-    author: { '@type': 'Person', name: post.value.author },
+    datePublished: publishedISO,
+    dateModified: publishedISO,
+    author: { '@type': 'Person', name: post.value.author, url: authorUrl },
     publisher: {
       '@type': 'Organization',
       name: 'LoSec',
@@ -201,11 +209,21 @@ useSeo({
       logo: { '@type': 'ImageObject', url: `${siteConfig.url}/losec-mark-512.png` },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
-    image,
+    image: articleImages,
     keywords: post.value.tags.join(', '),
     articleSection: post.value.category,
     url,
   },
+})
+
+// Open Graph "article" meta + keywords
+useSeoMeta({
+  articlePublishedTime: publishedISO,
+  articleModifiedTime: publishedISO,
+  articleSection: post.value.category,
+  articleTag: post.value.tags,
+  articleAuthor: [authorUrl],
+  keywords: post.value.tags.join(', '),
 })
 
 function monogram(author: string) {
